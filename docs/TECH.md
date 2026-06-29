@@ -135,7 +135,48 @@ mortals-journey-rmmz/
 
 ---
 
-## 7. 技術債追蹤
+## 7. 部署：CI/CD × GitHub Pages（網頁試玩）
+
+**結論：技術上可行。** RPGMaker MZ 本質為 HTML5 遊戲（PixiJS），專案根目錄即含 `index.html`，整個 `game/` 就是可直接託管的靜態網站；桌面版的 NW.js 只是包裝。
+
+### 7.1 部署方式
+
+- GitHub Pages = 靜態託管，與 MZ 網頁版天然相容。
+- **CI 不需 MZ 編輯器**：編輯器的「web deploy」僅做排除未用檔/壓縮/加密，無 headless CLI，CI 直接略過——專案本身即可跑。
+- 流程：`push main` → GitHub Action 將 `game/`（含 `index.html`）作為 Pages artifact → 部署。
+- 建議用官方 `actions/configure-pages` + `upload-pages-artifact` + `deploy-pages`（權限 `pages: write`、`id-token: write`）。
+
+### 7.2 技術注意事項
+
+| 項 | 風險 | 緩解 |
+| --- | --- | --- |
+| **檔名大小寫** | Pages（Linux）區分大小寫，Windows 編輯器不分；路徑大小寫不符本機正常、線上壞掉 | CI 加大小寫一致性檢查；維持命名紀律 |
+| **音訊格式** | iOS/Safari 需 `.m4a` | 同時帶 `.ogg` + `.m4a` |
+| **repo 肥大** | img/audio 二進位塞 git 會膨脹 | Git LFS，或素材於 CI 階段帶入 |
+| **存檔** | 網頁存 localStorage/IndexedDB，換瀏覽器/清快取即失，無法跨裝置 | 接受限制；可評估雲端存檔（demo 不做） |
+| **容量** | Pages 站點建議 <1GB、單檔 <100MB | demo 量級可控，留意音訊 |
+
+### 7.3 公開散布的版權處置（已決策）
+
+**決策：公開部署，不因版權自我設限。** 本作為**非商業**同人/二創，緩解方式為**於起始畫面放置版權免責聲明**。
+
+- **IP 版權**：《凡人修仙傳》為他人作品，本作為非商業致敬/二創；以起始畫面免責聲明處置，不視為部署阻擋項。
+- **付費資產/外掛授權**：網頁部署會公開所有程式碼與素材（MZ 加密形同虛設）。VisuStella 外掛、付費擴充包的公開散布授權為**待辦提醒**（非阻擋項），日後對外宣傳前順手確認即可。
+
+> 註：repo 設 private 僅保護「原始碼 repo」不被公開瀏覽；**GitHub Pages 部署出的網站在個人帳號（Free/Pro）仍為公開網址**（私有 Pages 存取控制需 Enterprise Cloud）。既已決定公開，此點不構成問題。
+
+### 7.4 部署 workflow
+
+已建立 [`.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml)：
+
+- `push main` 或手動觸發 → 將 `game/` 發布至 GitHub Pages。
+- **防呆**：`game/index.html` 不存在時略過部署（不失敗），故現階段 `game/` 空亦安全。
+- 內含**檔名大小寫衝突檢查**（防 Linux 區分大小寫的經典雷）。
+- 需於 repo 設定啟用 Pages（Source = GitHub Actions）。
+
+---
+
+## 8. 技術債追蹤
 
 | 項目 | 狀態 | 備註 |
 | --- | --- | --- |
@@ -144,3 +185,7 @@ mortals-journey-rmmz/
 | 種植系統自製 vs 現成外掛 | 🟡 評估中 | 傾向自製 |
 | `data/*.json` 正規化流程 | 🔴 未開始 | 利於 git diff |
 | 無 headless 驗證的替代方案 | 🟡 構想 | 可測邏輯抽純 JS 外掛做單元測試 + playtest 清單 |
+| GitHub Pages 部署 workflow | 🟢 已建立（防呆，待 game/ 就緒） | 公開部署，免責聲明處置版權 |
+| 起始畫面版權免責聲明 | 🔴 未開始 | 公開部署的版權緩解措施 |
+| 付費外掛/素材公開散布授權確認 | 🟡 待辦（非阻擋） | 對外宣傳前順手確認 |
+| 素材納管策略（Git LFS） | 🔴 未開始 | 避免 repo 膨脹 |

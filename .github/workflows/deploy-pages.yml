@@ -1,0 +1,73 @@
+name: Deploy to GitHub Pages
+
+# RPGMaker MZ 專案本身就是靜態網站（game/index.html）。
+# 此 workflow 將 game/ 直接發布到 GitHub Pages。
+# 防呆：game/index.html 不存在時（RMMZ 專案尚未建立）會略過部署，不會失敗。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同時間只跑一個部署，新的取代排隊中的
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.guard.outputs.ready }}
+    steps:
+      - name: Checkout（含 LFS 素材）
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: 防呆 — 確認 RMMZ 專案已存在
+        id: guard
+        run: |
+          if [ -f game/index.html ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::game/index.html 不存在，略過部署（RMMZ 專案尚未建立）。"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 檢查檔名大小寫衝突（Pages 為 Linux，區分大小寫）
+        if: steps.guard.outputs.ready == 'true'
+        run: |
+          dupes=$(git -C game ls-files | tr '[:upper:]' '[:lower:]' | sort | uniq -d)
+          if [ -n "$dupes" ]; then
+            echo "::error::偵測到僅大小寫不同的檔名，於 GitHub Pages（Linux）會載入失敗："
+            echo "$dupes"
+            exit 1
+          fi
+
+      - name: 設定 Pages
+        if: steps.guard.outputs.ready == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: 上傳 game/ 為 Pages artifact
+        if: steps.guard.outputs.ready == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: game
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
