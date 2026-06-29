@@ -14,3 +14,8 @@ ls:
 ignore:
   - .git
   - node_modules
+  # RMMZ / Effekseer 引擎標準特效目錄，路徑為引擎固定 PascalCase
+  # （.efkefc 內部以 Model/、Texture/ 引用），不可改名，故豁免。
+  # 大小寫一致由引擎保證，無 Linux 大小寫雷。
+  - game/effects/Model
+  - game/effects/Texture
