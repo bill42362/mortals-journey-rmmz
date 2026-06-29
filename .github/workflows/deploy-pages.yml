@@ -1,29 +1,31 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (per-branch)
 
-# RPGMaker MZ 專案本身就是靜態網站（game/index.html）。
-# 此 workflow 將 game/ 直接發布到 GitHub Pages。
-# 防呆：game/index.html 不存在時（RMMZ 專案尚未建立）會略過部署，不會失敗。
+# 每個 branch 部署到 gh-pages 分支的對應子資料夾，達成 per-branch 預覽路由：
+#   main      → gh-pages 根目錄    → https://<user>.github.io/<repo>/
+#   develop   → gh-pages/develop/  → https://<user>.github.io/<repo>/develop/
+#   其他分支   → gh-pages/<branch>/ → https://<user>.github.io/<repo>/<branch>/
+#
+# RMMZ 用相對路徑載入素材，放在子資料夾天生可跑，無需設 base path。
+# 防呆：game/index.html 不存在時（RMMZ 專案尚未建立）略過部署，不會失敗。
+#
+# ⚠️ 需於 repo Settings → Pages 將 Source 設為「Deploy from a branch」→ gh-pages /(root)。
 
 on:
   push:
-    branches: [main]
+    branches: ['**']
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write # peaceiris 需推送至 gh-pages 分支
 
-# 同時間只跑一個部署，新的取代排隊中的
+# 所有分支共用同一個 gh-pages 分支，序列化部署以避免 git push 競態
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: gh-pages-deploy
+  cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    outputs:
-      ready: ${{ steps.guard.outputs.ready }}
     steps:
       - name: Checkout（含 LFS 素材）
         uses: actions/checkout@v4
@@ -50,24 +52,25 @@ jobs:
             exit 1
           fi
 
-      - name: 設定 Pages
+      - name: 決定部署子路徑
         if: steps.guard.outputs.ready == 'true'
-        uses: actions/configure-pages@v5
+        id: route
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ "$BRANCH" = "main" ]; then
+            echo "dir=" >> "$GITHUB_OUTPUT"   # main 部署到根目錄
+          else
+            safe=$(echo "$BRANCH" | tr '/' '-')
+            echo "dir=$safe" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: 上傳 game/ 為 Pages artifact
+      - name: 部署到 gh-pages 子資料夾
         if: steps.guard.outputs.ready == 'true'
-        uses: actions/upload-pages-artifact@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: game
-
-  deploy:
-    needs: build
-    if: needs.build.outputs.ready == 'true'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: 部署到 GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./game
+          destination_dir: ${{ steps.route.outputs.dir }}
+          keep_files: true # 保留其他分支的子資料夾，不互相覆蓋
+          commit_message: "deploy: ${{ github.ref_name }} @ ${{ github.sha }}"

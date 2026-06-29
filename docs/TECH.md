@@ -165,14 +165,28 @@ mortals-journey-rmmz/
 
 > 註：repo 設 private 僅保護「原始碼 repo」不被公開瀏覽；**GitHub Pages 部署出的網站在個人帳號（Free/Pro）仍為公開網址**（私有 Pages 存取控制需 Enterprise Cloud）。既已決定公開，此點不構成問題。
 
-### 7.4 部署 workflow
+### 7.4 部署 workflow（per-branch 預覽路由）
 
-已建立 [`.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml)：
+採用 **`gh-pages` 分支 + 子資料夾**模式，讓每個 branch 有獨立預覽路由：
 
-- `push main` 或手動觸發 → 將 `game/` 發布至 GitHub Pages。
-- **防呆**：`game/index.html` 不存在時略過部署（不失敗），故現階段 `game/` 空亦安全。
+| Branch | gh-pages 位置 | 網址 |
+| --- | --- | --- |
+| `main` | 根目錄 | `https://<user>.github.io/<repo>/` |
+| `develop` | `develop/` | `https://<user>.github.io/<repo>/develop/` |
+| 其他 | `<branch>/`（`/`→`-`） | `https://<user>.github.io/<repo>/<branch>/` |
+
+- 為何不用官方「GitHub Actions」來源：該方式單一 artifact 整站覆蓋，無子路徑概念，無法做 per-branch。
+- **RMMZ 用相對路徑載入素材**，子資料夾託管天生可跑，無需設 base path。
+- workflow：
+  - [`.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml)：push 任一分支 → 建置 → 推至 gh-pages 對應子資料夾（`keep_files: true` 互不覆蓋；序列化避免 push 競態）。
+  - [`.github/workflows/cleanup-preview.yml`](../.github/workflows/cleanup-preview.yml)：branch 刪除時自動移除其預覽子資料夾。
+- **防呆**：`game/index.html` 不存在時略過部署（不失敗），故 `game/` 空亦安全。
 - 內含**檔名大小寫衝突檢查**（防 Linux 區分大小寫的經典雷）。
-- 需於 repo 設定啟用 Pages（Source = GitHub Actions）。
+
+**啟用步驟（需手動一次）**：repo Settings → Pages → Source 選「**Deploy from a branch**」→ 分支 `gh-pages`、目錄 `/(root)`。
+（此設定**取代**先前的「Source = GitHub Actions」。）
+
+**注意**：所有分支建置都存進同一 `gh-pages` 分支，分支多時該分支會膨脹（每份含完整素材）；cleanup workflow 可回收已刪分支，但活躍分支多仍需留意容量。
 
 ---
 

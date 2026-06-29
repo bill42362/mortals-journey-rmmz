@@ -42,8 +42,9 @@
 - [ ] 回合戰鬥基礎配置（逃跑率/先制/被偷襲）
 - [ ] `data/*.json` 正規化流程
 - [ ] 核心循環可玩性驗證（playtest）
-- [x] GitHub Pages 部署 workflow（公開部署，已建立、防呆待 game/ 就緒）
-- [ ] repo 啟用 Pages（Settings → Pages → Source: GitHub Actions）
+- [x] GitHub Pages 部署 workflow（per-branch 預覽路由，已建立、防呆待 game/ 就緒）
+- [x] 分支刪除自動清理 workflow
+- [ ] repo 啟用 Pages（Settings → Pages → Source: Deploy from a branch → gh-pages /(root)）
 - [ ] 起始畫面版權免責聲明
 - [ ] 素材納管策略（Git LFS）
 

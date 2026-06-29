@@ -1,0 +1,48 @@
+name: Cleanup branch preview
+
+# 當某個 branch 被刪除時，移除其在 gh-pages 上對應的預覽子資料夾，
+# 避免 gh-pages 分支累積已刪分支的舊建置。
+
+on:
+  delete:
+
+permissions:
+  contents: write
+
+# 與部署共用同一序列化群組，避免同時推 gh-pages 造成競態
+concurrency:
+  group: gh-pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    # 只處理「分支」刪除，且不動 main（根目錄正式站）
+    if: github.event.ref_type == 'branch' && github.event.ref != 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 移除 gh-pages 上的預覽子資料夾
+        env:
+          BRANCH: ${{ github.event.ref }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          safe=$(echo "$BRANCH" | tr '/' '-')
+          if [ -z "$safe" ] || [ "$safe" = "." ]; then
+            echo "分支名無效，略過"; exit 0
+          fi
+          repo="https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          if ! git ls-remote --exit-code --heads "$repo" gh-pages >/dev/null 2>&1; then
+            echo "gh-pages 分支不存在，無需清理"; exit 0
+          fi
+          git clone --depth 1 --branch gh-pages "$repo" ghp
+          cd ghp
+          if [ -d "$safe" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git rm -rf "$safe"
+            git commit -m "cleanup: remove preview for deleted branch $safe"
+            git push
+            echo "已移除預覽：$safe"
+          else
+            echo "無 $safe 子資料夾，略過"
+          fi
