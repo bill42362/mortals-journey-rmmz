@@ -73,4 +73,4 @@ jobs:
           publish_dir: ./game
           destination_dir: ${{ steps.route.outputs.dir }}
           keep_files: true # 保留其他分支的子資料夾，不互相覆蓋
-          commit_message: "deploy: ${{ github.ref_name }} @ ${{ github.sha }}"
+          commit_message: 'deploy: ${{ github.ref_name }} @ ${{ github.sha }}'

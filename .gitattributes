@@ -1,0 +1,51 @@
+# =========================================================
+#  換行正規化：所有文字檔一律 LF
+#  （Windows 編輯器 / macOS / Linux CI 之間不再出現換行雜訊）
+# =========================================================
+* text=auto eol=lf
+
+*.json  text eol=lf
+*.js    text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+
+# =========================================================
+#  Git LFS：二進位素材（避免 repo 膨脹；見 docs/TECH.md §7.2）
+#
+#  前置需求（每位協作者本機需執行一次）：
+#    brew install git-lfs   # macOS
+#    git lfs install
+#  注意：GitHub 免費方案 LFS 有 1GB 儲存 / 1GB 月流量配額，留意素材量。
+# =========================================================
+
+# 圖片
+*.png   filter=lfs diff=lfs merge=lfs -text
+*.jpg   filter=lfs diff=lfs merge=lfs -text
+*.jpeg  filter=lfs diff=lfs merge=lfs -text
+*.gif   filter=lfs diff=lfs merge=lfs -text
+*.webp  filter=lfs diff=lfs merge=lfs -text
+*.bmp   filter=lfs diff=lfs merge=lfs -text
+
+# 音訊（iOS/Safari 需 .m4a，桌面用 .ogg；見 TECH.md §7.2）
+*.ogg   filter=lfs diff=lfs merge=lfs -text
+*.m4a   filter=lfs diff=lfs merge=lfs -text
+*.mp3   filter=lfs diff=lfs merge=lfs -text
+*.wav   filter=lfs diff=lfs merge=lfs -text
+*.aac   filter=lfs diff=lfs merge=lfs -text
+
+# 影片
+*.webm  filter=lfs diff=lfs merge=lfs -text
+*.mp4   filter=lfs diff=lfs merge=lfs -text
+
+# 字型（CJK 字型體積大，務必走 LFS；公開部署前記得子集化避免單檔過大）
+*.ttf   filter=lfs diff=lfs merge=lfs -text
+*.otf   filter=lfs diff=lfs merge=lfs -text
+*.woff  filter=lfs diff=lfs merge=lfs -text
+*.woff2 filter=lfs diff=lfs merge=lfs -text
+
+# RMMZ 特效（Effekseer）二進位
+*.efkefc filter=lfs diff=lfs merge=lfs -text
+*.efk    filter=lfs diff=lfs merge=lfs -text

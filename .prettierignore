@@ -1,0 +1,31 @@
+# Prettier 只負責「我們自己手寫」的檔案（自製外掛、docs、設定）。
+# 以下交給 RMMZ 引擎 / 編輯器 / 第三方管理，prettier 不可介入：
+
+# --- RMMZ 引擎核心與編輯器產生的程式 ---
+game/js/rmmz_*.js
+game/js/main.js
+game/js/plugins.js
+game/js/libs/
+
+# --- 第三方外掛（VisuStella 等），保持原樣以利比對官方版本 ---
+game/js/plugins/VisuMZ_*.js
+
+# --- 資料庫 JSON：由 RMMZ 編輯器輸出，prettier 化會與每次存檔互相打架 ---
+#     （若要正規化 data/*.json，應以「比對引擎輸出格式」的專用腳本處理，
+#      見 docs/TECH.md §8 技術債，而非交給 prettier）
+game/data/
+
+# --- Markdown 文件：CJK 內容交給人工排版 ---
+#     prettier 會把表格依「字元數」補空白對齊，但它誤判中日韓全形寬度，
+#     結果反而視覺錯位且造成大量 diff，故 docs 維持手寫。
+*.md
+
+# --- 素材 / 二進位 / 輸出 ---
+game/img/
+game/audio/
+game/fonts/
+game/effects/
+game/movies/
+game/icon/
+node_modules/
+dist/

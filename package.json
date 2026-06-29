@@ -1,0 +1,18 @@
+{
+  "name": "mortals-journey-rmmz",
+  "version": "0.0.0",
+  "private": true,
+  "description": "《凡人修仙傳》凡界篇 RPGMaker MZ 改編 — 開發工具設定（非遊戲本體；遊戲在 game/）",
+  "scripts": {
+    "lint:dirs": "ls-lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@ls-lint/ls-lint": "^2.2.3",
+    "prettier": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
