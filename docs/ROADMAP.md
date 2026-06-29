@@ -26,6 +26,7 @@
 - [x] 序章劇情文件
 - [x] VisuStella 模組清單與載入順序定稿（見 [TECH §1.1](../docs/TECH.md)；待人工實機載入驗證）
 - [x] 多語系 (i18n) 方案定案（i18n-ready、MessageCore TSV，見 [TECH §1.3](../docs/TECH.md)）
+- [x] 奠基決策定案（解析度 1280×720、可見踩觸遇敵、CJK 字型內嵌，見 [TECH §1.4](../docs/TECH.md)）
 - [ ] 境界職業參數草案
 - [ ] 第一～三幕 + 壓軸劇情文件
 - [ ] 刪除 requirements.md（內容已拆解完成後）
@@ -43,6 +44,8 @@
 - [ ] 功法習得（SkillLearnSystem）
 - [ ] 回合戰鬥基礎配置（逃跑率/先制/被偷襲）
 - [ ] i18n 骨架（MessageCore Text Language 參數、建立 `game/data/` 翻譯 TSV、預設語言中文）
+- [ ] 奠基設定：CoreEngine 解析度設 1280×720、內嵌 CJK 字型（防網頁豆腐方塊）
+- [ ] 可見踩觸遇敵慣例（EventsMoveCore 視野/追逐範式，供地圖事件複用）
 - [ ] `data/*.json` 正規化流程
 - [ ] 核心循環可玩性驗證（playtest）
 - [x] GitHub Pages 部署 workflow（per-branch 預覽路由，已實機驗證：main 與 develop 皆正常上線）
