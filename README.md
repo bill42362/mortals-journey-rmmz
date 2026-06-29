@@ -35,9 +35,16 @@
 | [docs/SPEC.md](docs/SPEC.md) | 專案目的、範圍、驗收條件、商業目標 |
 | [docs/TECH.md](docs/TECH.md) | 技術選型、架構、系統元件規劃、素材清單 |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | 開發階段與追蹤列表 |
+| [docs/PLUGINS.md](docs/PLUGINS.md) | 外掛啟用總表與安裝/驗證 SOP（本機設定必讀） |
 | [docs/story/](docs/story/) | 各章節劇情、地圖、事件、對話 |
 | [CLAUDE.md](CLAUDE.md) | AI 協作 context、關鍵決策紀錄與工作流規範 |
 
 ## 技術骨架
 
-RPGMaker MZ + VisuStella MZ 外掛生態；原生回合制戰鬥。細節見 [docs/TECH.md](docs/TECH.md)。
+RPGMaker MZ + VisuStella MZ 外掛生態（10 模組）；原生回合制戰鬥。選型與決策細節見 [docs/TECH.md](docs/TECH.md)。
+
+## 本機設定
+
+要在本機跑出完整外掛環境，需照 [docs/PLUGINS.md](docs/PLUGINS.md) 安裝並啟用 VisuStella 外掛（付費 `.js` 需自備，放入 `game/js/plugins/`，依指定 tier 順序載入）。`game/` 本身即 RMMZ 專案根，用 MZ 編輯器開啟 `game/` 即可。
+
+> ⚠️ 協作鐵則：**MZ 編輯器與 AI 不同時寫同一檔**——編輯器關閉後 AI 才動 `data/`。詳見 [CLAUDE.md](CLAUDE.md)。

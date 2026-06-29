@@ -20,8 +20,9 @@
 | [docs/SPEC.md](docs/SPEC.md) | 給 PM：目的、量體、驗收條件、商業目標 |
 | [docs/TECH.md](docs/TECH.md) | 技術選型、架構、元件規劃、技術債 |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | 工程階段與追蹤列表 |
+| [docs/PLUGINS.md](docs/PLUGINS.md) | 外掛啟用總表與安裝/驗證 SOP（實機操作用） |
 | [docs/story/](docs/story/) | 各章節劇情大綱、地圖規劃、事件、對話文本 |
-| [README.md](README.md) | 給技術人員的快速上手（目前近乎空白） |
+| [README.md](README.md) | 給技術人員的快速上手（含線上試玩、本機設定、文件導覽） |
 
 ---
 
