@@ -24,7 +24,7 @@
 - [x] 五項關鍵決策拍板（紀錄於 [CLAUDE.md](../CLAUDE.md)）
 - [x] 建立文件結構（SPEC / TECH / ROADMAP / CLAUDE / story）
 - [x] 序章劇情文件
-- [ ] VisuStella 模組清單與載入順序定稿
+- [x] VisuStella 模組清單與載入順序定稿（見 [TECH §1.1](../docs/TECH.md)；待人工實機載入驗證）
 - [ ] 境界職業參數草案
 - [ ] 第一～三幕 + 壓軸劇情文件
 - [ ] 刪除 requirements.md（內容已拆解完成後）

@@ -15,20 +15,35 @@
 | 程式語言 | JavaScript（外掛） | AI 主要產出面。 |
 | 版本控制 | git | `js/`、`docs/`、`data/`（正規化後）皆追蹤。 |
 
-### 1.1 VisuStella 啟用模組（草案，待定稿）
+### 1.1 VisuStella 啟用模組（✅ 已定稿 2026-06-30）
 
-| 模組 | 用途 | 對應系統 |
-| --- | --- | --- |
-| `VisuMZ_0_CoreEngine` | 基礎依賴 | 全部 |
-| `VisuMZ_1_BattleCore` | 戰鬥強化、逃跑/先制控制 | 回合戰鬥、「苟」 |
-| `VisuMZ_1_SkillsStatesCore` | 技能/狀態擴充 | 技能功法 |
-| `VisuMZ_1_ItemsEquipsCore` | 道具/裝備擴充 | 丹藥、法寶 |
-| `VisuMZ_1_MessageCore` | 對話強化 | 劇情文本 |
-| `VisuMZ_1_EventsMoveCore` | 事件/移動強化 | 地圖事件、潛行/伏擊 |
-| `VisuMZ_2_SkillLearnSystem` | 顯式習得技能 | **功法 / 典籍參悟** |
-| `VisuMZ_2_ItemCraftingSys` | 配方合成 | **煉丹**（製符同框架） |
+Demo 啟用 **8 個 VisuStella 模組**。**載入順序 = tier 數字升冪**（檔名前綴 `VisuMZ_<tier>_` 即 tier；低 tier 先載、高 tier 後載），下表已按外掛管理器（Plugin Manager）由上至下的正確順序排列：
 
-> ⚠️ 模組載入順序、版本與授權需於開發前一次性確認；混用非 VisuStella 外掛前先驗證相容性。
+| # | 模組（檔名即載入順序） | Tier | 用途 | 對應系統 | 相依 |
+| --- | --- | :---: | --- | --- | --- |
+| 1 | `VisuMZ_0_CoreEngine` | 0 | 基礎依賴 | 全部 | — |
+| 2 | `VisuMZ_1_BattleCore` | 1 | 戰鬥強化、逃跑/先制控制 | 回合戰鬥、「苟」 | CoreEngine |
+| 3 | `VisuMZ_1_SkillsStatesCore` | 1 | 技能/狀態擴充 | 技能功法 | CoreEngine |
+| 4 | `VisuMZ_1_ItemsEquipsCore` | 1 | 道具/裝備擴充 | 丹藥、法寶 | CoreEngine |
+| 5 | `VisuMZ_1_MessageCore` | 1 | 對話強化 | 劇情文本 | CoreEngine |
+| 6 | `VisuMZ_1_EventsMoveCore` | 1 | 事件/移動強化 | 地圖事件、潛行/伏擊 | CoreEngine |
+| 7 | `VisuMZ_2_SkillLearnSystem` | 2 | 顯式習得技能 | **功法 / 典籍參悟** | CoreEngine；配合 SkillsStatesCore |
+| 8 | `VisuMZ_2_ItemCraftingSys` | 2 | 配方合成 | **煉丹**（製符同框架） | CoreEngine；**硬性需 ItemsEquipsCore（須在其上）** |
+
+**定稿規則與注意事項（依官方 Yanfly.moe Wiki 確認）**：
+
+1. **Tier 升冪載入**：Tier 0 → 1 → 2，務必由上至下照上表順序排。同一 tier 內五個模組彼此無硬相依，順序可互換，但建議維持上表順序以利對照官方文件。
+2. **CoreEngine 是全體地基**：所有 VisuStella 外掛皆依賴它，永遠放第一。
+3. **唯一明確跨模組硬相依**：`ItemCraftingSys` **必須**有 `ItemsEquipsCore` 且置於其上（本清單已滿足）。
+4. **SkillLearnSystem** 無強制相依，但設計上配合 `SkillsStatesCore` 管理技能，兩者同時啟用（本清單已滿足）。
+5. **不可改檔名**：tier 系統由檔名前綴判定，`VisuMZ_<tier>_<Name>` 不可重命名。
+6. **自製外掛載入位置**：所有 `MJ_*.js`（見 §1.2）皆掛鉤 VisuStella，**一律排在全部 VisuStella 模組之下**（清單最末）。
+7. **版本**：採購時一次取齊同一批（同期版本）以避免跨版本相容問題；升級時整批同步。
+8. **授權**：VisuStella MZ 為付費外掛，本作為非商業二創可用，但**網頁部署會公開外掛原始碼**——公開散布授權須於對外宣傳前確認（非阻擋項，見 [§7.3](#73-公開散布的版權處置已決策)）。
+
+> 來源：[Core Engine](https://www.yanfly.moe/wiki/Core_Engine_VisuStella_MZ)、[Skill Learn System](https://www.yanfly.moe/wiki/Skill_Learn_System_VisuStella_MZ)、[Item Crafting System](https://www.yanfly.moe/wiki/Item_Crafting_System_VisuStella_MZ)（Yanfly.moe Wiki）。
+>
+> ⏳ **待人工驗證 (B)**：將上述外掛檔案放入 `game/js/plugins/`、於編輯器外掛管理器照序啟用、跑一次確認無紅字報錯（AI 無法執行，需付費檔 + 開編輯器）。
 
 ### 1.2 需自製的外掛
 
@@ -38,6 +53,8 @@
 | `MJ_HerbFarming.js` | 靈草種植/催化：地塊、生長階段、收成 | 傾向自製（需與小綠瓶綁定） |
 | `MJ_Realm.js` | 境界系統：境界鏡像變數、瓶頸/突破流程封裝 | 見 §3 |
 | `MJ_LootAndPK.js`（暫名） | 殺人奪寶：屍體掉寶、伏擊判定 | 輕量，事件為主、外掛輔助 |
+
+> ⚠️ 載入位置：所有 `MJ_*.js` 掛鉤 VisuStella，須排在 §1.1 全部 VisuStella 模組**之下**（清單最末）。
 
 ---
 
@@ -211,7 +228,7 @@ mortals-journey-rmmz/
 
 | 項目 | 狀態 | 備註 |
 | --- | --- | --- |
-| VisuStella 模組清單定稿 | 🔴 未開始 | 含載入順序與授權確認 |
+| VisuStella 模組清單定稿 | 🟢 已定稿（2026-06-30，見 §1.1）；待人工實機載入驗證 (B) | 含載入順序與授權確認 |
 | 境界屬性成長曲線數值 | 🔴 未開始 | 三職業參數 |
 | 種植系統自製 vs 現成外掛 | 🟡 評估中 | 傾向自製 |
 | `data/*.json` 正規化流程 | 🔴 未開始 | 利於 git diff |
