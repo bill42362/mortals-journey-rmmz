@@ -11,7 +11,7 @@
 
 ## 目前階段
 
-📄 **文件製作階段**（尚未進入 `game/` 開發）。`game/` 暫空。
+🔧 **M1 技術骨架**起步：初始 RMMZ 專案已建立（`game/` 即專案根，含 `index.html`），GitHub Pages per-branch 部署已實機驗證（main / develop 皆可線上試玩）。下一步為定稿 VisuStella 模組清單並開始核心系統外掛。
 
 ## 文件地圖
 

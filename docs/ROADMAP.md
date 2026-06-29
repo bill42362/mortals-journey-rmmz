@@ -10,7 +10,7 @@
 | 階段 | 目標 | 對應劇情 | 量級 | 狀態 |
 | --- | --- | --- | --- | --- |
 | **M0 文件 / 架構** | 文件就緒、決策拍板 | — | 1–2 週 | 🟡 進行中 |
-| **M1 技術骨架** | 核心循環跑通 | （系統層） | 3–5 週 | 🔴 未開始 |
+| **M1 技術骨架** | 核心循環跑通 | （系統層） | 3–5 週 | 🟡 進行中（專案/部署就緒，核心外掛未起） |
 | **M2 內容生產** | 序章→第三幕地圖事件/文本/戰鬥 | 序章～第三幕 | 4–8 週 | 🔴 未開始 |
 | **M3 壓軸整合** | 血色試煉、築基、殺人奪寶串接 | 第三幕～壓軸 | 2–4 週 | 🔴 未開始 |
 | **M4 調校 / 驗收** | 數值平衡、試玩、修 bug | 全 | 2–4 週（持續） | 🔴 未開始 |
@@ -33,7 +33,8 @@
 
 > 目標循環：**小綠瓶 → 種植 → 採藥 → 煉丹 → 變強**
 
-- [ ] 建立 `game/` RMMZ 專案、安裝 VisuStella 骨架
+- [x] 建立 `game/` RMMZ 專案（初始專案已建，`game/` 即專案根）
+- [ ] 安裝 VisuStella 骨架
 - [ ] 境界系統 `MJ_Realm.js`（職業/鏡像變數/突破流程）
 - [ ] 小綠瓶 `MJ_GreenBottle.js`
 - [ ] 靈草種植 `MJ_HerbFarming.js`（與小綠瓶耦合）
@@ -42,9 +43,9 @@
 - [ ] 回合戰鬥基礎配置（逃跑率/先制/被偷襲）
 - [ ] `data/*.json` 正規化流程
 - [ ] 核心循環可玩性驗證（playtest）
-- [x] GitHub Pages 部署 workflow（per-branch 預覽路由，已建立、防呆待 game/ 就緒）
+- [x] GitHub Pages 部署 workflow（per-branch 預覽路由，已實機驗證：main 與 develop 皆正常上線）
 - [x] 分支刪除自動清理 workflow
-- [ ] repo 啟用 Pages（Settings → Pages → Source: Deploy from a branch → gh-pages /(root)）
+- [x] repo 啟用 Pages（Settings → Pages → Source: Deploy from a branch → gh-pages /(root)）
 - [ ] 起始畫面版權免責聲明
 - [ ] 素材納管策略（Git LFS）
 
