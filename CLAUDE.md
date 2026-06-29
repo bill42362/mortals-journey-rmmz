@@ -11,7 +11,7 @@
 
 ## 目前階段
 
-🔧 **M1 技術骨架**起步：初始 RMMZ 專案已建立（`game/` 即專案根，含 `index.html`），GitHub Pages per-branch 部署已實機驗證（main / develop 皆可線上試玩）。VisuStella 模組清單已定稿（[TECH §1.1](docs/TECH.md)，10 模組含載入順序；待人工實機載入驗證）。下一步為開始核心系統外掛。
+🔧 **M1 技術骨架**進行中：初始 RMMZ 專案已建立（`game/` 即專案根，含 `index.html`），GitHub Pages per-branch 部署已實機驗證（main / develop 皆可線上試玩）。**VisuStella 10 模組已安裝並實機載入驗證通過**（[TECH §1.1](docs/TECH.md)）；**解析度已設 1280×720、標題正名「凡界篇」**。奠基決策（i18n、可見踩觸遇敵、CJK 字型）已定案（[TECH §1.3/1.4](docs/TECH.md)）。下一步為開始核心系統外掛（首塊 `MJ_Realm.js`）；待人工項剩 CJK 字型內嵌與 i18n 骨架。
 
 ## 文件地圖
 
@@ -57,7 +57,7 @@
 ## 待決策 / TBD
 
 - [ ] 境界內屬性成長曲線數值（練氣 / 築基職業參數）。
-- [x] VisuStella 確切啟用模組清單與載入順序（✅ 已定稿，見 [TECH §1.1](docs/TECH.md)；待人工實機載入驗證）。
+- [x] VisuStella 確切啟用模組清單與載入順序（✅ 已定稿並實機驗證通過，見 [TECH §1.1](docs/TECH.md) / [PLUGINS.md](docs/PLUGINS.md)）。
 - [ ] 靈草種植系統：採用現成 farming 外掛或自製（目前傾向自製，因需與小綠瓶耦合）。
 - [ ] 「劇情之壁軟退場」的具體表現手法（過場、強制撤離、NPC 介入…）。
 - [ ] 美術風格策略：**依地域指派風格家族**（一地一風貌，見 [TECH §6](docs/TECH.md)），確認各地域對應素材包。

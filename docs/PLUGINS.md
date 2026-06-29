@@ -11,7 +11,7 @@
 
 | 順序 | 外掛(檔名不可改) | Tier | 用途 | 相依 |
 | :---: | --- | :---: | --- | --- |
-| 1 | `VisuMZ_0_CoreEngine` | 0 | 基礎依賴、解析度設定 | — |
+| 1 | `VisuMZ_0_CoreEngine` | 0 | 基礎依賴、畫面適配 | — |
 | 2 | `VisuMZ_1_BattleCore` | 1 | 戰鬥強化、逃跑/先制控制 | CoreEngine |
 | 3 | `VisuMZ_1_SkillsStatesCore` | 1 | 技能/狀態擴充 | CoreEngine |
 | 4 | `VisuMZ_1_ItemsEquipsCore` | 1 | 道具/裝備擴充 | CoreEngine |
@@ -53,11 +53,19 @@
 
 > ✅ VisuStella 內建相依/順序檢查:順序錯或缺相依會跳警告對話框。沒跳警告 = 順序對了。
 
-### Step 4 — 設定解析度 1280×720
+### Step 4 — 設定解析度 1280×720（檔案編輯，非編輯器參數）
 
-1. 雙擊 `VisuMZ_0_CoreEngine` 開參數。
-2. 找參數群組 **`Screen Resolution Settings`** → **`Resolution`** 下拉 → 選 **`1280x720`**。
-3. 確定。
+> ⚠️ **VisuStella CoreEngine 沒有設定基礎解析度的參數**（其 `Screen Resolution Settings` 只是畫面適配/重定位，非設解析度本身）。RMMZ 的基礎解析度存在 **`game/data/System.json` 的 `advanced` 區塊**。
+
+由 **AI 編輯這兩個檔**（`data/` 受鐵則約束，須編輯器關閉後才動）：
+
+| 檔案 | 欄位 | 值 |
+| --- | --- | --- |
+| `game/data/System.json`（`advanced`） | `screenWidth` / `uiAreaWidth` | `1280` |
+| | `screenHeight` / `uiAreaHeight` | `720` |
+| `game/package.json`（`window`，桌面打包用） | `width` / `height` | `1280` / `720` |
+
+改完重開編輯器 **Playtest** 確認畫面為寬螢幕 16:9。（CoreEngine 會自動適配此解析度。）
 
 ### Step 5 — 存檔
 
@@ -83,7 +91,7 @@
 ### Step 8 — 完成後
 
 1. **關閉編輯器**(鐵則:關了 AI 才能動 `data/`)。
-2. 回報結果 → 由 AI git 追蹤提交 `game/js/plugins/`(10 .js)+ `game/js/plugins.js` + CoreEngine 設定,並把 [TECH §1.1](./TECH.md) 的「待人工驗證 (B)」標記完成。
+2. 回報結果 → 由 AI git 追蹤提交 `game/js/plugins/`(.js)+ `game/js/plugins.js` + 解析度設定(`System.json` / `package.json`),並更新 [TECH §1.1](./TECH.md) 的驗證狀態。
 
 ---
 
@@ -95,7 +103,7 @@
 | 「requires VisuMZ_X」 | 缺相依或沒 ON | 確認 10 個都在且 Status=ON |
 | 整片紅字 / 黑畫面 | 某 .js 版本不符或檔損 | 同批重新下載該檔 |
 | 中文顯示豆腐方塊 □□□ | 字型未內嵌(預期內) | 屬 M1「CJK 字型」任務,本次先略 |
-| 解析度沒變 | CoreEngine 沒 ON 或沒存檔 | 確認 #1 ON、已 `Ctrl+S`、重啟試玩 |
+| 解析度沒變 | 改錯地方（解析度在 `System.json`，非 CoreEngine） | 依 Step 4 改 `System.json`/`package.json`，重啟試玩 |
 
 ---
 
