@@ -25,6 +25,7 @@
 - [x] 建立文件結構（SPEC / TECH / ROADMAP / CLAUDE / story）
 - [x] 序章劇情文件
 - [x] VisuStella 模組清單與載入順序定稿（見 [TECH §1.1](../docs/TECH.md)；待人工實機載入驗證）
+- [x] 多語系 (i18n) 方案定案（i18n-ready、MessageCore TSV，見 [TECH §1.3](../docs/TECH.md)）
 - [ ] 境界職業參數草案
 - [ ] 第一～三幕 + 壓軸劇情文件
 - [ ] 刪除 requirements.md（內容已拆解完成後）
@@ -41,6 +42,7 @@
 - [ ] 煉丹（ItemCraftingSys 配方）
 - [ ] 功法習得（SkillLearnSystem）
 - [ ] 回合戰鬥基礎配置（逃跑率/先制/被偷襲）
+- [ ] i18n 骨架（MessageCore Text Language 參數、建立 `game/data/` 翻譯 TSV、預設語言中文）
 - [ ] `data/*.json` 正規化流程
 - [ ] 核心循環可玩性驗證（playtest）
 - [x] GitHub Pages 部署 workflow（per-branch 預覽路由，已實機驗證：main 與 develop 皆正常上線）
