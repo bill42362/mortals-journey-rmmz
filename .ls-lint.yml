@@ -1,0 +1,16 @@
+# ls-lint 設定：強制所有「資料夾」名稱為小寫。
+# 目的：避免 GitHub Pages（Linux 區分大小寫）的路徑大小寫雷。
+#
+# 注意：僅約束「目錄」，不約束「檔案」——RMMZ 內建檔名多為 PascalCase
+# （如 Actors.json、Map001.json、Actor1.png、VisuMZ_1_BattleCore.js），
+# 全小寫會破壞引擎慣例。
+#
+# 本機執行：  npx @ls-lint/ls-lint
+# 文件：      https://ls-lint.org
+
+ls:
+  .dir: lowercase
+
+ignore:
+  - .git
+  - node_modules

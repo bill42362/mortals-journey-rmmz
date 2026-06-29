@@ -1,0 +1,23 @@
+name: Lint
+
+# 以 ls-lint 確保資料夾名稱皆為小寫（設定見 .ls-lint.yml）。
+# 防 GitHub Pages（Linux）大小寫路徑雷。
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ls-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: 檢查資料夾命名（小寫）
+        run: npx --yes @ls-lint/ls-lint@2
