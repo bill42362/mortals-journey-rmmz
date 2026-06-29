@@ -23,9 +23,8 @@
 | [docs/SPEC.md](docs/SPEC.md) | 專案目的、範圍、驗收條件、商業目標 |
 | [docs/TECH.md](docs/TECH.md) | 技術選型、架構、系統元件規劃、素材清單 |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | 開發階段與追蹤列表 |
-| [docs/estimate.md](docs/estimate.md) | 可行性評估與關鍵決策紀錄 |
 | [docs/story/](docs/story/) | 各章節劇情、地圖、事件、對話 |
-| [CLAUDE.md](CLAUDE.md) | AI 協作 context 與工作流規範 |
+| [CLAUDE.md](CLAUDE.md) | AI 協作 context、關鍵決策紀錄與工作流規範 |
 
 ## 技術骨架
 

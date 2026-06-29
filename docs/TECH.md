@@ -1,7 +1,7 @@
 # TECH.md — 技術文件
 
 > 技術選型、專案架構、元件規劃與技術債追蹤。
-> 決策的權威來源與理由見 [estimate.md §7](./estimate.md)；本檔聚焦「怎麼做」。
+> 關鍵決策紀錄見 [CLAUDE.md](../CLAUDE.md)；本檔聚焦「怎麼做」。
 
 ---
 
@@ -50,7 +50,7 @@ mortals-journey-rmmz/
 │  ├─ js/plugins/     # 外掛（AI 全權、git 追蹤）
 │  └─ img/ audio/ ... # 素材（內建 + 擴充包）
 ├─ docs/              # 文件
-│  ├─ SPEC.md  TECH.md  ROADMAP.md  estimate.md
+│  ├─ SPEC.md  TECH.md  ROADMAP.md
 │  └─ story/          # 各章節資料
 ├─ README.md
 └─ CLAUDE.md          # AI 協作 context
@@ -67,6 +67,13 @@ mortals-journey-rmmz/
 | 地圖事件 | AI / 人類皆可 | 儘量薄殼化（呼叫共通事件）以利維護；AI 可直接修改 |
 | 共通事件 / 資料庫 | AI（產生器腳本） | 大量內容用腳本輸出合法 JSON |
 | `js/plugins/` 與參數 | AI | git 追蹤 |
+
+### 2.2 AI 協作的能與限
+
+- **AI 強項（可大量產出）**：外掛開發（JS）、劇本/對話/道具技能文本、資料庫批次內容（產生器腳本輸出 JSON）、共通事件邏輯。
+- **保留人工**：地圖 tile 繪製（慣例）、資料庫在編輯器內的最終確認、試玩驗收、外掛安裝設定。
+- **務實期望**：AI 可扛 **70–85% 產出量**，但**無法 100% 無人化**；需求「最小化人工、可能僅剩地圖繪製」方向正確，惟人類仍需承擔上述確認/驗收。
+- **驗證限制**：MZ 無 headless 建置/測試；緩解 = 可測邏輯抽純 JS 外掛做單元測試 + playtest 檢查清單（見 §8）。
 
 ---
 
