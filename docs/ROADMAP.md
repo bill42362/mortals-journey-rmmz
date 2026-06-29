@@ -36,7 +36,7 @@
 > 目標循環：**小綠瓶 → 種植 → 採藥 → 煉丹 → 變強**
 
 - [x] 建立 `game/` RMMZ 專案（初始專案已建，`game/` 即專案根）
-- [ ] 安裝 VisuStella 骨架
+- [x] 安裝 VisuStella 骨架（10 模組實機載入驗證通過，見 [PLUGINS.md](../docs/PLUGINS.md)）
 - [ ] 境界系統 `MJ_Realm.js`（職業/鏡像變數/突破流程）
 - [ ] 小綠瓶 `MJ_GreenBottle.js`
 - [ ] 靈草種植 `MJ_HerbFarming.js`（與小綠瓶耦合）
