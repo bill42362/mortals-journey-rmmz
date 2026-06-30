@@ -47,7 +47,7 @@
 - [x] 解析度設 1280×720（`data/System.json` `advanced` + `package.json window`；非 CoreEngine 參數）
 - [x] UI 仙俠詞彙中文化（System.json terms：氣血/靈力/層/修為/銅板…，見 [TECH §10](../docs/TECH.md)）
 - [ ] VisuStella 外掛參數字串中文化（OptionsCore/煉丹/習得等，漸進）
-- [ ] 內嵌 CJK 字型（防網頁豆腐方塊；預設 M+ 字型不涵蓋全中文）
+- [x] 內嵌 CJK 字型（Noto Sans TC，`MJ_Font.js` 注入 unicode-range CSS；待 playtest 確認）
 - [ ] 可見踩觸遇敵慣例（EventsMoveCore 視野/追逐範式，供地圖事件複用）
 - [ ] `data/*.json` 正規化流程
 - [ ] 核心循環可玩性驗證（playtest）
