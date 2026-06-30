@@ -228,6 +228,8 @@ mortals-journey-rmmz/
 >
 > **唯一原則：同一場景/地域內保持一致**，避免看起來像隨意拼貼；地域之間則刻意求變。
 
+**角色素材風格家族（✅ 定調 2026-06-30）**：鎖定「**MZ 動漫高解析**」family（內建 RTP / NpcResourcePack / ISEKAI / **MV Trinity**）。東亞修仙味以 **MV Trinity Resource Pack** 為主來源——其 enemies 含功夫高手/忍者/僵屍/隱士/妖獸神獸（妲己、九尾、神龍、刑天、鴆鳥…），是修仙敵人金礦。**REFMAP（SD 小頭娃娃 family）不採用**，與動漫風混用會打架。序章 cast 實際選用見 [story/00 §10](story/00-序章-青牛鎮.md)。
+
 ---
 
 ## 7. 部署：CI/CD × GitHub Pages（網頁試玩）
