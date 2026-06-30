@@ -1,0 +1,32 @@
+Key	Chinese(Traditional)	English
+op_narr_intro_01	青牛鎮地處偏僻，鎮上人家世代務農。韓立便是其中一戶貧農家的孩子。
+op_narr_intro_02	他不算機靈，卻有一樣旁人少有的本事——凡事都要先想三分退路。
+op_hanmu_call	立兒——立兒？快進屋來，你三叔回來啦！
+op_hanmu_01	立兒，家裡的光景你也曉得，多一張嘴就多一分難。
+op_hanmu_02	你三叔在前頭等你，去聽他說——能有口安穩飯吃，是天大的福分。
+op_hanmu_repeat	快去尋你三叔吧，莫讓他久等了。
+op_bundle_examine	牆角擱著一個舊布囊，是娘替你連夜收拾的。
+op_bundle_get	你收拾了行囊。
+op_bundle_empty	布囊已經收拾妥當，沒什麼好添的了。
+op_sanshu_recruit	立兒，你也老大不小了。七玄門在招外門弟子——通過資質測試便能入門，每月還有米糧月例，貼補家用。
+op_sanshu_test	測試不難，看的是根骨資質。能不能入門，是命；可入了門，往後怎麼活下去，是本事。
+op_sanshu_advice	叔在門裡當了多年雜役，看得多了。記住一句話——機會難得，但凡事，留個心眼總沒錯。
+op_sanshu_depart	收拾停當便動身。出鎮走村外那條田埂小徑，叔在關口等你。
+op_sanshu_repeat	還有什麼放不下的？早些動身，路上不等人。
+op_villager_well_01	這口井，養活了大半個鎮子的人哩。
+op_villager_well_02	後生仔，你也要去七玄門？……唉，能出去也好。總比在這土裡刨食強。
+op_peddler_greet	客官看點啥？乾糧、草鞋、針線，都是趕路用得著的。手頭緊就先看著——銅板可得省著花。
+op_peddler_poor	銅板不夠哩，客官。莫急，七玄門有月例，往後就寬裕了。
+op_peddler_thanks	得嘞，慢走！
+op_choice_shortcut_prompt	前方有條近路，只是隱約聽見惡犬低吼，地面也泥濘難行。
+op_choice_shortcut_opt_safe	繞遠路（穩妥）
+op_choice_shortcut_opt_rush	抄近路（省時）
+op_choice_shortcut_safe	你多走了些路，卻在草叢裡撿著幾枚別人遺落的銅板。謹慎，往往有它的回報。
+op_choice_shortcut_rush	惡犬撲來，你連滾帶爬才脫身，乾糧掉了一塊，褲腳也濕透了。逞快，未必划算。
+op_encounter_intro	拐過田埂，一條野狗呲牙攔在路上，喉間低低作響。
+op_encounter_hint	打不過，就走。逃跑，永遠是一條路。
+op_encounter_flee	你不與牠糾纏，側身退開。野狗朝你背影吠了兩聲，到底沒追上來。能走，就不必硬拼。
+op_encounter_win	你揀起一根樹枝胡亂揮打，野狗討了個沒趣，夾著尾巴跑了。
+op_sanshu_gate	都收拾妥當了？那走罷。跟著叔，少說話，多看，多留心。
+op_narr_leave	韓立回頭望了一眼青牛鎮。他還不知道，這一步，將把他帶往一個怎樣的世界。
+op_narr_chapter_end	——序章 完——

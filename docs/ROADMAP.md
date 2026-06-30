@@ -43,7 +43,7 @@
 - [ ] 煉丹（ItemCraftingSys 配方）
 - [ ] 功法習得（SkillLearnSystem）
 - [ ] 回合戰鬥基礎配置（逃跑率/先制/被偷襲）
-- [ ] i18n 骨架（MessageCore Text Language 參數、建立 `game/data/` 翻譯 TSV、預設語言中文）
+- [x] i18n 骨架（MessageCore Localization 已開啟、`game/data/Languages.tsv` 已建含序章 31 key、預設語言繁中；見 [TECH §1.3](../docs/TECH.md)）
 - [x] 解析度設 1280×720（`data/System.json` `advanced` + `package.json window`；非 CoreEngine 參數）
 - [x] UI 仙俠詞彙中文化（System.json terms：氣血/靈力/層/修為/銅板…，見 [TECH §10](../docs/TECH.md)）
 - [ ] VisuStella 外掛參數字串中文化（OptionsCore/煉丹/習得等，漸進）
