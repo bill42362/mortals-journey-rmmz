@@ -1,6 +1,6 @@
 [
 null,
-{"id":1,"battlerName":"Actor4_4_mvt","characterIndex":3,"characterName":"Actor4_mvt","classId":1,"equips":[0,0,0,0,0],"faceIndex":3,"faceName":"Actor4_mvt","traits":[],"initialLevel":1,"maxLevel":99,"name":"韓立","nickname":"","note":"","profile":"青牛鎮貧農之子。不算機靈，卻凡事先想三分退路。"},
+{"id":1,"battlerName":"","characterIndex":2,"characterName":"People_ex1","classId":1,"equips":[0,0,0,0,0],"faceIndex":2,"faceName":"People_ex1","traits":[],"initialLevel":1,"maxLevel":99,"name":"韓立","nickname":"","note":"","profile":"青牛鎮貧農之子。不算機靈，卻凡事先想三分退路。"},
 {"id":2,"battlerName":"Actor1_2","characterIndex":1,"characterName":"Actor1","classId":1,"equips":[1,0,0,9,0],"faceIndex":1,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"Priscilla","nickname":"","note":"","profile":""},
 {"id":3,"battlerName":"Actor1_3","characterIndex":2,"characterName":"Actor1","classId":5,"equips":[31,0,65,5,0],"faceIndex":2,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"Gale","nickname":"","note":"","profile":""},
 {"id":4,"battlerName":"Actor1_4","characterIndex":3,"characterName":"Actor1","classId":5,"equips":[31,0,0,5,0],"faceIndex":3,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"Michelle","nickname":"","note":"","profile":""},
