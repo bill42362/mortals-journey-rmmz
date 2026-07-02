@@ -64,17 +64,24 @@ def resolve(tbl):
 def load_table(path=None):
     return {int(k): v for k, v in json.load(open(path or DEFAULT_TABLE)).items()}
 
-def reshape_region(m, table, x0, y0, x1, y1, layer=0, oob=True):
-    """Recompute A2 autotile shapes in [x0,x1) x [y0,y1) on `layer`, in-place.
+def reshape_region(m, table, x0, y0, x1, y1, layer=0, oob=True, kinds=None):
+    """Recompute autotile shapes in [x0,x1) x [y0,y1) on `layer`, in-place.
+
+    Default (kinds=None): reshape A2 floor tiles. Pass kinds={116, ...} to reshape
+    specific autotile kinds instead (e.g. an A4 forest canopy) — those must use
+    the FLOOR 47-blob logic (A2 ground, A4 wall-top), which `table` encodes.
     Returns number of tiles changed. `table` from load_table()."""
     w, h, data = m["width"], m["height"], m["data"]
     def get(x, y, z=layer):
         return data[(z*h+y)*w+x] if 0 <= x < w and 0 <= y < h else None
+    def want(t):
+        if t is None or t < A1: return False
+        return (kind(t) in kinds) if kinds is not None else is_a2(t)
     updates = []
     for y in range(max(0, y0), min(h, y1)):
         for x in range(max(0, x0), min(w, x1)):
             t = get(x, y)
-            if t is None or not is_a2(t): continue
+            if not want(t): continue
             ck = kind(t)
             sh = table.get(neighbor_mask(get, x, y, ck, oob))
             if sh is None: continue

@@ -55,7 +55,49 @@ def build(donor_path):
             for z in (1, 2, 3):
                 MZ.mset(out, x, y, z, 0)
     # blend painted path + courtyard grounds like the editor
-    A.reshape_region(out, A.load_table(), 6, 5, 17, 15, layer=0)
+    table = A.load_table()
+    A.reshape_region(out, table, 6, 5, 17, 15, layer=0)
+    fix_forest(out, table)
+    return out
+
+CANOPY = 2048 + 116 * 48   # Outside A4 forest canopy (kind 116), solid shape
+
+def _is_a4(v):   return 5888 <= v < 8192
+def _is_canopy(v): return v >= 2048 and (v - 2048) // 48 == 116
+
+def fix_forest(out, table):
+    """Cropping a forest-bordered donor leaves cut A4 tiles (flat-green blocks,
+    black holes) and grass pockets orphaned inside the trees. Flatten the forest
+    to one canopy kind, close the pockets, and re-blob with oob=True so it reads
+    as a clean continuous tree line that closes at the map edges."""
+    w, h = out["width"], out["height"]
+    N8 = [(-1,-1),(0,-1),(1,-1),(-1,0),(1,0),(-1,1),(0,1),(1,1)]
+    # 1. flatten every A4 forest tile (canopy/cliff-side/stray) -> canopy solid
+    for y in range(h):
+        for x in range(w):
+            for z in range(4):
+                if _is_a4(MZ.grid_get(out, x, y, z)):
+                    MZ.mset(out, x, y, z, CANOPY)
+    # 2. close grass(kind16)/void pockets that are mostly surrounded by canopy
+    for _ in range(3):
+        todo = []
+        for y in range(h):
+            for x in range(w):
+                v = MZ.grid_get(out, x, y, 0)
+                if _is_canopy(v): continue
+                k = (v - 2048) // 48 if v >= 2048 else -2
+                if v != 0 and k != 16: continue          # only grass/void, never path/buildings
+                nb = sum(1 for dx, dy in N8 if 0 <= x+dx < w and 0 <= y+dy < h
+                         and _is_canopy(MZ.grid_get(out, x+dx, y+dy, 0)))
+                if nb >= 5: todo.append((x, y))
+        for x, y in todo:
+            for z in range(4): MZ.mset(out, x, y, z, 0)
+            MZ.mset(out, x, y, 0, CANOPY)
+        if not todo: break
+    # 3. re-blob the canopy (closes at edges) + fix A2 tiles in the L/R borders
+    A.reshape_region(out, table, 0, 0, w, h, layer=0, kinds={116})
+    A.reshape_region(out, table, 17, 0, w, h, layer=0)   # right border grass
+    A.reshape_region(out, table, 0, 0, 2, h, layer=0)    # far-left padded column
     return out
 
 def main():
