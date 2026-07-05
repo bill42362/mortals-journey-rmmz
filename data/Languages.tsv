@@ -37,7 +37,7 @@ op_coins_hidden_get	樹洞裡藏著幾枚小時候悄悄塞進去的銅錢——
 op_coins_hidden_empty	樹洞已經掏空了，就那麼點私房錢。
 op_sandal_worn_get	草叢邊擱著一雙不知誰穿舊了扔下的草鞋，破雖破了些，勉強還能穿。窮家的孩子不嫌棄——湊合著用吧。	
 op_sandal_worn_empty	那雙破草鞋，已經被你撿走了。	
-op_gate_need_sanshu	〔出鎮前，先去與三叔道個別罷。〕	
+op_gate_need_sanshu	〔三叔正在關口候著，要領你一同啟程。去尋他罷。〕	
 op_act1_todo	〔第一幕・七玄門 尚在建置中——序章到此告一段落。〕	
 op_road_intro	〔前方岔開兩條路：一條近道能省腳程，一條遠路要多繞些工夫。此去吉凶難料，走哪條，你且謹慎斟酌。〕	
 op_road_far_coin	你揀了遠路，多繞了好些工夫。行至一處草坡，竟在草窠裡踢著幾枚旁人遺落的銅板——繞遠路，有時反有意外之喜。	
