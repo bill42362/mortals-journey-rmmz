@@ -37,12 +37,14 @@
 
 - [x] 建立 `game/` RMMZ 專案（初始專案已建，`game/` 即專案根）
 - [x] 安裝 VisuStella 骨架（10 模組實機載入驗證通過，見 [PLUGINS.md](../docs/PLUGINS.md)）
-- [ ] 境界系統 `MJ_Realm.js`（職業/鏡像變數/突破流程）
-- [ ] 小綠瓶 `MJ_GreenBottle.js`
-- [ ] 靈草種植 `MJ_HerbFarming.js`（與小綠瓶耦合）
-- [ ] 煉丹（ItemCraftingSys 配方）
-- [ ] 功法習得（SkillLearnSystem）
-- [ ] 回合戰鬥基礎配置（逃跑率/先制/被偷襲）
+- [x] 境界系統 `MJ_Realm.js`（職業/鏡像變數(變數2)/突破流程；三境界一次設計，凡人/練氣(9)/築基(10)）
+- [x] 小綠瓶 `MJ_GreenBottle.js`（承月光滋生靈液=變數3、稀缺節流）
+- [x] 靈草種植 `MJ_HerbFarming.js`（多地塊狀態機，自然生長+靈液催長；與小綠瓶耦合）
+- [x] 殺人奪寶 `MJ_LootAndPK.js`（屍體掉寶+伏擊判定雛形；完整系統第三幕）
+- [x] 煉丹（ItemCraftingSys 配方）——第一幕凡間製藥配方＋選單門控；真煉丹靈石成本待第二幕
+- [x] 功法習得（SkillLearnSystem）——第一幕（長春功免費/火球術書簡）＋移除 AP grind；靈石成本待第二幕
+- [x] 第一幕資料層（道具 32–41、功法 236–237、配方/習得成本 notetag，見 [PLUGINS §2/§2.3](../docs/PLUGINS.md)）
+- [ ] 回合戰鬥基礎配置（逃跑率/先制/被偷襲）——伏擊判定已由 `MJ_LootAndPK` 提供；逃跑率/troops 待內容期
 - [x] i18n 骨架（MessageCore Localization 已開啟、`game/data/Languages.tsv` 已建含序章 31 key、預設語言繁中；見 [TECH §1.3](../docs/TECH.md)）
 - [x] 解析度設 1280×720（`data/System.json` `advanced` + `package.json window`；非 CoreEngine 參數）
 - [x] UI 仙俠詞彙中文化（System.json terms：氣血/靈力/層/修為/銅板…，見 [TECH §10](../docs/TECH.md)）

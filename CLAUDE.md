@@ -11,7 +11,7 @@
 
 ## 目前階段
 
-🔧 **M1 技術骨架**進行中：初始 RMMZ 專案已建立（`game/` 即專案根，含 `index.html`），GitHub Pages per-branch 部署已實機驗證（main / develop 皆可線上試玩）。**VisuStella 10 模組已安裝並實機載入驗證通過**（[TECH §1.1](docs/TECH.md)）；**解析度已設 1280×720、標題正名「凡界篇」**。奠基決策（i18n、可見踩觸遇敵、CJK 字型）已定案（[TECH §1.3/1.4](docs/TECH.md)）。下一步為開始核心系統外掛（首塊 `MJ_Realm.js`）；待人工項剩 CJK 字型內嵌與 i18n 骨架。
+🔧 **M1 技術骨架**進行中：初始 RMMZ 專案已建立（`game/` 即專案根，含 `index.html`），GitHub Pages per-branch 部署已實機驗證（main / develop 皆可線上試玩）。**VisuStella 10 模組已安裝並實機載入驗證通過**（[TECH §1.1](docs/TECH.md)）；**解析度已設 1280×720、標題正名「凡界篇」**。奠基決策（i18n、可見踩觸遇敵、CJK 字型）已定案（[TECH §1.3/1.4](docs/TECH.md)）。**核心系統外掛全數實作完成**（`MJ_Realm`/`MJ_GreenBottle`/`MJ_HerbFarming`/`MJ_LootAndPK`，見 [TECH §1.2](docs/TECH.md)、[PLUGINS §2](docs/PLUGINS.md)）；**第一幕資料層已配置**（道具/功法/煉丹配方/功法習得成本；煉丹與習得選單入口關閉、改事件驅動）。下一步：M04 山門廣場地圖（人工繪製）＋事件薄殼／第二幕靈石成本配置／第三幕文件（三擇一）。
 
 ## 文件地圖
 
@@ -59,7 +59,7 @@
 
 - [ ] 境界內屬性成長曲線數值（練氣 / 築基職業參數）。
 - [x] VisuStella 確切啟用模組清單與載入順序（✅ 已定稿並實機驗證通過，見 [TECH §1.1](docs/TECH.md) / [PLUGINS.md](docs/PLUGINS.md)）。
-- [ ] 靈草種植系統：採用現成 farming 外掛或自製（目前傾向自製，因需與小綠瓶耦合）。
+- [x] 靈草種植系統：**自製**（`MJ_HerbFarming` 已實作，與小綠瓶 `MJ_GreenBottle` 耦合，2026-07-05）。
 - [ ] 「劇情之壁軟退場」的具體表現手法（過場、強制撤離、NPC 介入…）。
 - [ ] 美術風格策略：**依地域指派風格家族**（一地一風貌，見 [TECH §6](docs/TECH.md)），確認各地域對應素材包。
 - [x] 三叔命名：**維持「三叔」稱謂、不另取名**（2026-06-30，貼合原著樸實感；其餘配角命名仍待定）。
