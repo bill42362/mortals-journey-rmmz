@@ -244,11 +244,19 @@
             return true;
         },
 
-        // 依境界主角當前職業重算鏡像變數
-        syncVar(actorId) {
-            if (REALM_VARIABLE_ID > 0 && $gameVariables) {
-                $gameVariables.setValue(REALM_VARIABLE_ID, this.tierOf(actorId || REALM_ACTOR_ID));
+        // 依 Game_Actor 實例當前職業重算鏡像變數。
+        // ⚠️ 只讀 actor._classId，絕不經 $gameActors.actor() 反查——setup 期間該實例
+        //    尚未寫回 $gameActors._data，反查會無限遞迴造成 stack overflow。
+        syncVarFor(actor) {
+            if (REALM_VARIABLE_ID > 0 && $gameVariables && actor) {
+                const r = realmByClassId(actor._classId);
+                $gameVariables.setValue(REALM_VARIABLE_ID, r ? r.tier : 0);
             }
+        },
+
+        // 依 actorId 重算鏡像變數（供插件指令等「實例已建立」的情境；勿在 setup 內呼叫）
+        syncVar(actorId) {
+            this.syncVarFor(this.actor(actorId || REALM_ACTOR_ID));
         },
     };
 
@@ -266,14 +274,15 @@
     const _Game_Actor_changeClass = Game_Actor.prototype.changeClass;
     Game_Actor.prototype.changeClass = function (classId, keepExp) {
         _Game_Actor_changeClass.call(this, classId, keepExp);
-        if (this.actorId() === REALM_ACTOR_ID) MJ.Realm.syncVar(this.actorId());
+        if (this.actorId() === REALM_ACTOR_ID) MJ.Realm.syncVarFor(this);
     };
 
     // 新遊戲／隊伍初始化時同步鏡像變數，確保凡人基線＝1（供突破前的境界判斷）。
+    // 用 syncVarFor(this)：此刻實例尚未寫回 $gameActors._data，不可經 $gameActors 反查。
     const _Game_Actor_setup = Game_Actor.prototype.setup;
     Game_Actor.prototype.setup = function (actorId) {
         _Game_Actor_setup.call(this, actorId);
-        if (this.actorId() === REALM_ACTOR_ID) MJ.Realm.syncVar(this.actorId());
+        if (this.actorId() === REALM_ACTOR_ID) MJ.Realm.syncVarFor(this);
     };
 
     // ── 插件指令 ──────────────────────────────────────────────────────────
