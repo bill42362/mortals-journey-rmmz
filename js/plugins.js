@@ -16,5 +16,6 @@ var $plugins =
 {"name":"MJ_Font","status":true,"description":"載入並套用繁體中文字型（Noto Sans TC）。","parameters":{}},
 {"name":"MJ_Realm","status":true,"description":"境界系統：職業＝境界、等級＝層、上限＝撞瓶頸、突破＝Change Class；維護境界鏡像變數。","parameters":{"realmActorId":"1","realmVariableId":"2","playBreakthroughSe":"true","breakthroughSe":"{\"name\":\"Saint9\",\"volume\":\"90\",\"pitch\":\"100\",\"pan\":\"0\"}"}},
 {"name":"MJ_GreenBottle","status":true,"description":"小綠瓶：承月光滋生靈液（稀缺），為 MJ_HerbFarming 澆灌加速所消耗的耦合資源。","parameters":{"liquidVariableId":"3","maxStorage":"3","dropsPerNight":"1","ownedSwitchId":"0"}},
-{"name":"MJ_HerbFarming","status":true,"description":"靈草種植：多地塊狀態機（播種→生長→可採），自然生長靠步數、澆灌靈液催長。依賴 MJ_GreenBottle。","parameters":{"waterBoostStages":"2","stepsPerStage":"200"}}
+{"name":"MJ_HerbFarming","status":true,"description":"靈草種植：多地塊狀態機（播種→生長→可採），自然生長靠步數、澆灌靈液催長。依賴 MJ_GreenBottle。","parameters":{"waterBoostStages":"2","stepsPerStage":"200"}},
+{"name":"MJ_LootAndPK","status":true,"description":"輕量殺人奪寶：屍體掉寶（含機率掉落表）＋伏擊判定（可見遇敵→先制/被偷襲）。","parameters":{"lootTables":"\"{}\""}}
 ];
