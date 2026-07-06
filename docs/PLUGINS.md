@@ -23,14 +23,15 @@
 | 6 | `VisuMZ_1_EventsMoveCore` | 第三方 | 1 | 事件/移動強化、視野/追逐 | CoreEngine |
 | 7 | `VisuMZ_1_OptionsCore` | 第三方 | 1 | 選項選單擴充(語言切換 UI) | CoreEngine |
 | 8 | `VisuMZ_1_SaveCore` | 第三方 | 1 | 存檔擴充、autosave | CoreEngine |
-| 9 | `VisuMZ_2_SkillLearnSystem` | 第三方 | 2 | 顯式習得功法（配置見 §2.3） | CoreEngine；配合 SkillsStatesCore |
-| 10 | `VisuMZ_2_ItemCraftingSys` | 第三方 | 2 | 配方合成/煉丹（配置見 §2.3） | CoreEngine；**硬性需 ItemsEquipsCore 在其上** |
-| 11 | `MJ_FillWindow` | 自製 | — | 桌面瀏覽器拉伸填滿視窗 | 僅改 `Graphics`，位置不拘（慣例置此） |
-| 12 | `MJ_Font` | 自製 | — | 內嵌 Noto Sans TC 字型 | 覆寫 `Game_System`，須在 VisuStella 後 |
-| 13 | `MJ_Realm` | 自製 | — | 境界系統（職業=境界、突破） | 覆寫 `Game_Actor`，須在 VisuStella 後 |
-| 14 | `MJ_GreenBottle` | 自製 | — | 小綠瓶（靈液產出） | **須在 `MJ_HerbFarming` 之上** |
-| 15 | `MJ_HerbFarming` | 自製 | — | 靈草種植（靈液消耗） | **依賴 `MJ_GreenBottle`** |
-| 16 | `MJ_LootAndPK` | 自製 | — | 殺人奪寶（掉寶＋伏擊） | 覆寫 `BattleManager`，須在 VisuStella 後 |
+| 9 | `VisuMZ_2_ItemCraftingSys` | 第三方 | 2 | 配方合成/煉丹（配置見 §2.3） | CoreEngine；**硬性需 ItemsEquipsCore 在其上** |
+| 10 | `MJ_FillWindow` | 自製 | — | 桌面瀏覽器拉伸填滿視窗 | 僅改 `Graphics`，位置不拘（慣例置此） |
+| 11 | `MJ_Font` | 自製 | — | 內嵌 Noto Sans TC 字型 | 覆寫 `Game_System`，須在 VisuStella 後 |
+| 12 | `MJ_Realm` | 自製 | — | 境界系統（職業=境界、突破） | 覆寫 `Game_Actor`，須在 VisuStella 後 |
+| 13 | `MJ_GreenBottle` | 自製 | — | 小綠瓶（靈液產出） | **須在 `MJ_HerbFarming` 之上** |
+| 14 | `MJ_HerbFarming` | 自製 | — | 靈草種植（靈液消耗） | **依賴 `MJ_GreenBottle`** |
+| 15 | `MJ_LootAndPK` | 自製 | — | 殺人奪寶（掉寶＋伏擊） | 覆寫 `BattleManager`，須在 VisuStella 後 |
+
+> **功法習得不再用外掛**：`VisuMZ_2_SkillLearnSystem` 已於 2026-07-06 移除（原列表 10 個 VisuStella → 現 9 個）。功法改用**原生「習得技能」道具效果**（書簡/玉簡參悟），見 §2.3。日後若要「可瀏覽的參悟選單」再加回。
 
 ### 關鍵規則
 
@@ -75,17 +76,22 @@
 
 **`MJ_LootAndPK` — 輕量殺人奪寶**（見 [TECH §4](./TECH.md)、[story/01 §7.6](./story/01-第一幕-七玄門.md)）
 - 職責：①屍體掉寶（可帶機率的掉落，含銅板/道具/靈石/丹方/書簡；具名表批次擲取）②伏擊判定（可見踩觸遇敵→先制/被偷襲）。
-- ⚠️ **功法不在此習得**：殺人只掉《XX》書簡（道具），習得走書簡道具／SkillLearnSystem 參悟（正典：殺人→掉書簡→參悟→習得）。
+- ⚠️ **功法不在此習得**：殺人只掉《XX》書簡（道具），習得走**書簡道具的原生「習得技能」效果**（正典：殺人→掉書簡→參悟→習得，書簡不消耗）。
 - 事件介面：插件指令 `掉落·銅板／掉落·道具／發放具名掉落／伏擊判定／設定先攻`；腳本 `MJ.LootAndPK.rollLoot()／ambush(eventId)／judgeAmbush()`。伏擊透過覆寫 `BattleManager.setup` 套用一次性先攻旗標。
 - 遇敵相容：可見踩觸遇敵（事件戰鬥，先攻走本外掛伏擊）與原生隨機遇敵（先攻走原生 `onEncounter`）**互不衝突**，可同圖並存（見 [TECH §1.4](./TECH.md)）。
 
-### 2.3 VisuStella 資料層配置（本專案）
+### 2.3 煉丹與功法習得配置（本專案）
 
-> 煉丹與功法習得**不是新外掛**，而是第三方 `ItemCraftingSys`／`SkillLearnSystem` 的配置。第一幕份已配（2026-07-06）。
+> **煉丹**＝第三方 `ItemCraftingSys` 配置；**功法習得**＝**原生機制**（非外掛，2026-07-06 定調，貼原著）。第一幕份已配（2026-07-06）。
 
-- **選單入口關閉、改事件驅動**：兩者的常駐選單入口皆設 **關閉**（`SkillLearnSystem` MenuAccess `ShowMenu=false`、`ItemCraftingSys` MainMenu `ShowMainMenu=false`）——習得/煉丹一律由**事件/NPC 開啟場景**（拜師墨大夫、丹房、藏經閣），符合修仙敘事，並避免玩家在教學前提早取用。
-- **煉丹配方**：以 `<Crafting Ingredients>` notetag 掛在**產出道具**的 note（`data/Items.json`）。第一幕（凡間製藥）：療傷丹←藥草×2、毒丹←高年份毒草×1、補藥←藥草×3。第二幕真煉丹另以靈石為成本（待配）。
-- **功法習得成本**：以 `<Learn AP Cost: 0>`（移除 AP grind）＋ `<Learn Item 名稱 Cost: x>` notetag 掛在**功法 skill** 的 note（`data/Skills.json`）；可習得清單以 `<Learn Skills>` notetag 掛在**職業** note（`data/Classes.json`）。第一幕：長春功(免費,凡人可習)、火球術(耗火球術書簡×1,練氣可習)。第二幕起吃靈石。
+- **煉丹（ItemCraftingSys）**
+  - 選單入口關閉、改事件驅動：主選單「煉製」入口設 **關閉**（`MainMenu ShowMainMenu=false`）——煉丹一律由**事件/NPC 開啟場景**（藥堂、丹房），符合「須到丹房」敘事。
+  - 配方以 `<Crafting Ingredients>` notetag 掛在**產出道具**的 note（`data/Items.json`）。第一幕（凡間製藥）：療傷丹←藥草×2、毒丹←高年份毒草×1、補藥←藥草×3。第二幕真煉丹另以靈石為成本（待配）。
+- **功法習得（原生機制，貼原著「殺人/買典籍→參悟→習得，書簡不消耗」）**
+  - **師授**：如長春功（EV-08 墨大夫）——事件用原生「變更技能（增加）」直接授予，無書、無成本。
+  - **書簡參悟**：如火球術（EV-21 遺物書簡）——書簡＝**非消耗**道具（`consumable:false`、`occasion` 選單）＋原生**「習得技能」道具效果**（effect code 43），使用即習得、**書簡留著**。
+  - **靈石成本在「買書」不在「習得」**：第二幕藏經閣以靈石**購入玉簡/典籍**（走兌換窗），買到後用書參悟；靈石 sink 在購買步驟。
+  - ⚠️ 已**移除** `VisuMZ_2_SkillLearnSystem`（見 §1）；原掛的 `<Learn ...>` notetag 已清。
 - **功法 skill 類型**：韓立功法用 `stypeId 2`（三境界職業皆具此技能類型），`System.json` 已將 `skillTypes[2]` 正名為「功法」。
 
 ---
@@ -97,11 +103,11 @@
 
 ### Step 1 — 取得外掛檔
 
-從你購買/下載 VisuStella 的來源(visustella.com / itch.io / Patreon)取得第 1 節表中 **10 個 `.js`**。`CoreEngine` 為免費基礎,其餘依已購 library。檔名保持原樣。
+從你購買/下載 VisuStella 的來源(visustella.com / itch.io / Patreon)取得第 1 節表中 **9 個 `.js`**（SkillLearnSystem 已移除，不需取得）。`CoreEngine` 為免費基礎,其餘依已購 library。檔名保持原樣。
 
 ### Step 2 — 放置
 
-把 10 個 `.js` 複製進 `game/js/plugins/`。
+把 9 個 `.js` 複製進 `game/js/plugins/`。
 
 ### Step 3 — 加入外掛(順序是關鍵)
 
@@ -156,7 +162,7 @@
 | 症狀 | 多半原因 | 解法 |
 | --- | --- | --- |
 | 跳「place under lower tier」警告 | VisuStella 順序排錯 | 照第 1 節表拖曳重排 |
-| 「requires VisuMZ_X」 | 缺相依或沒 ON | 確認 10 個 VisuStella 都在且 Status=ON |
+| 「requires VisuMZ_X」 | 缺相依或沒 ON | 確認 9 個 VisuStella 都在且 Status=ON |
 | `MJ_HerbFarming` 澆灌無效/報錯 | `MJ_GreenBottle` 未在其上或未啟用 | 確認 GreenBottle 排在 HerbFarming 之上且 ON |
 | 突破後屬性/技能異常 | `Classes.json` 缺 練氣(9)/築基(10) | 確認職業存在（見 §2.2 `MJ_Realm`） |
 | 整片紅字 / 黑畫面 | 某 .js 版本不符或檔損 | 同批重新下載該 VisuStella 檔 |
