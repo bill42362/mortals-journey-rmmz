@@ -142,16 +142,27 @@ def build_block(root):
     kept = whitelist_lines(root)
     lines = [
         BEGIN_MARK,
-        "# 策略：預設忽略 game/img、game/audio 下所有素材，只保留下方 whitelist 的檔。",
-        "# 完整 DLC/RTP 可整包複製進 game/img 供編輯器預覽，未 whitelist 者不進 git、不部署。",
+        "# 策略：預設忽略 img/audio/effects/fonts/movies 下所有素材，未經允許者不進 git、不部署。",
+        "#   img/audio＝只保留下方 whitelist（依 data 引用）；effects/fonts/movies＝保留已追蹤、擋新倒入。",
+        "# 完整 DLC 可整包複製進對應資料夾供編輯器預覽。詳見 tools/asset-audit/README.md。",
         "# 重新產生：python3 tools/asset-audit/audit.py gen-ignore --write",
+        "# ── img / audio：依 data 引用自動篩選，只保留下方 whitelist ──",
         "game/img/**/*.png",
         "game/img/**/*.jpg",
         "game/img/**/*.jpeg",
+        "game/img/**/*.gif",
+        "game/img/**/*.webp",
+        "game/img/**/*.bmp",
         "game/audio/**/*.ogg",
         "game/audio/**/*.m4a",
         "game/audio/**/*.mp3",
         "game/audio/**/*.wav",
+        "game/audio/**/*.aac",
+        "# ── effects / fonts / movies：擋新倒入的檔；已追蹤者不受影響（tracked",
+        "#    永遠不被忽略）。要用新的請 git add -f（特效需連 .efkmodel/貼圖一起加）。──",
+        "game/effects/**",
+        "game/fonts/**",
+        "game/movies/**",
         "",
         f"# --- whitelist：{len(kept)} 個實際引用中的素材 ---",
     ]
@@ -224,6 +235,10 @@ def collect_refs(root):
             continue
         for nm in t.get("tilesetNames", []) or []:
             add("img/tilesets", nm, "Tilesets")
+    for a in load_json(data_dir, "Animations.json") or []:
+        if not a:
+            continue
+        add("effects", a.get("effectName"), "Animations")  # → game/effects/<name>.efkefc
 
     add("img/titles1", sysd.get("title1Name"), "System")
     add("img/titles2", sysd.get("title2Name"), "System")
@@ -290,6 +305,8 @@ def collect_refs(root):
                 add("img/sv_actors", p[5], f"{src}:322")
         elif code == 323 and len(p) >= 3:           # Change Vehicle Image
             add("img/characters", p[1], f"{src}:323")
+        elif code == 261 and p:                     # Play Movie
+            add("movies", p[0], f"{src}:261")
         elif code == 41 and p:                      # 移動路線·變更圖像
             add("img/characters", p[0], f"{src}:41")
 
@@ -309,6 +326,17 @@ def cmd_check(root):
     index = collections.defaultdict(set)  # folder -> {basename}
     for p in tracked:
         index[category(p)].add(os.path.splitext(p.split("/")[-1])[0])
+
+    def ls(path):
+        return subprocess.check_output(
+            ["git", "-C", root, "ls-files", path], text=True
+        ).splitlines()
+    for p in ls("game/effects"):          # 特效以 .efkefc 為單位（貼圖/模型隨附）
+        if p.endswith(".efkefc"):
+            index["effects"].add(os.path.splitext(p.split("/")[-1])[0])
+    for p in ls("game/movies"):
+        if p.lower().endswith((".webm", ".mp4")):
+            index["movies"].add(os.path.splitext(p.split("/")[-1])[0])
 
     refs = collect_refs(root)
     missing = []
@@ -334,6 +362,31 @@ def cmd_check(root):
     return 0
 
 
+def cmd_stage(root, subdir):
+    """把 game/<subdir> 下『被忽略且未追蹤』的檔（＝剛倒入的新素材）整組 git add -f。
+    僅限 effects/fonts/movies——這些無法按檔篩，以整組手動納入。img/audio 請走 gen-ignore。"""
+    if subdir not in ("effects", "fonts", "movies"):
+        print(f"❌ stage 僅支援 effects/fonts/movies；img/audio 請用 "
+              f"gen-ignore（依 data 引用自動篩選）。")
+        return 2
+    path = f"game/{subdir}"
+    out = subprocess.check_output(
+        ["git", "-C", root, "ls-files", "--others", "--ignored",
+         "--exclude-standard", "-z", "--", path], text=True
+    )
+    files = [f for f in out.split("\0") if f]
+    if not files:
+        print(f"（{path} 下沒有未追蹤的新檔——沒東西要納入。）")
+        return 0
+    print(f"將把 {path} 下 {len(files)} 個新檔納入版控：")
+    for f in files:
+        print(f"   + {f}")
+    subprocess.check_call(["git", "-C", root, "add", "-f", "--", *files])
+    print("✅ 已 git add -f。建議接著跑 "
+          "`python3 tools/asset-audit/audit.py check` 確認特效引用完整。")
+    return 0
+
+
 def cmd_list_unused(root):
     corpus = build_corpus(root)
     for p in sorted(tracked_assets(root)):
@@ -349,6 +402,8 @@ def main():
     gi = sub.add_parser("gen-ignore", help="產生/更新 .gitignore whitelist 區塊")
     gi.add_argument("--write", action="store_true", help="就地寫入 .gitignore")
     sub.add_parser("check", help="CI 守門：引用是否都有已追蹤對應檔")
+    st = sub.add_parser("stage", help="把剛倒入的 effects/fonts/movies 新檔整組 git add -f")
+    st.add_argument("subdir", choices=["effects", "fonts", "movies"])
     sub.add_parser("list-unused", help="印出未引用的已追蹤素材路徑")
     args = ap.parse_args()
     root = repo_root()
@@ -356,6 +411,7 @@ def main():
         "report": lambda: cmd_report(root),
         "gen-ignore": lambda: cmd_gen_ignore(root, args.write),
         "check": lambda: cmd_check(root),
+        "stage": lambda: cmd_stage(root, args.subdir),
         "list-unused": lambda: cmd_list_unused(root),
     }[args.cmd]()
 

@@ -43,16 +43,27 @@ game/data/*.json.bak
 /output/
 
 # >>> asset-audit managed whitelist (自動產生，勿手改) >>>
-# 策略：預設忽略 game/img、game/audio 下所有素材，只保留下方 whitelist 的檔。
-# 完整 DLC/RTP 可整包複製進 game/img 供編輯器預覽，未 whitelist 者不進 git、不部署。
+# 策略：預設忽略 img/audio/effects/fonts/movies 下所有素材，未經允許者不進 git、不部署。
+#   img/audio＝只保留下方 whitelist（依 data 引用）；effects/fonts/movies＝保留已追蹤、擋新倒入。
+# 完整 DLC 可整包複製進對應資料夾供編輯器預覽。詳見 tools/asset-audit/README.md。
 # 重新產生：python3 tools/asset-audit/audit.py gen-ignore --write
+# ── img / audio：依 data 引用自動篩選，只保留下方 whitelist ──
 game/img/**/*.png
 game/img/**/*.jpg
 game/img/**/*.jpeg
+game/img/**/*.gif
+game/img/**/*.webp
+game/img/**/*.bmp
 game/audio/**/*.ogg
 game/audio/**/*.m4a
 game/audio/**/*.mp3
 game/audio/**/*.wav
+game/audio/**/*.aac
+# ── effects / fonts / movies：擋新倒入的檔；已追蹤者不受影響（tracked
+#    永遠不被忽略）。要用新的請 git add -f（特效需連 .efkmodel/貼圖一起加）。──
+game/effects/**
+game/fonts/**
+game/movies/**
 
 # --- whitelist：316 個實際引用中的素材 ---
 !game/audio/bgm/Battle1.ogg
