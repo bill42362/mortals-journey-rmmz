@@ -52,6 +52,13 @@ jobs:
             exit 1
           fi
 
+      - name: 素材守門 — 引用的素材都須已追蹤（防 gh-pages 破圖）
+        if: steps.guard.outputs.ready == 'true'
+        run: |
+          # data/ 引用了某素材、但該檔沒進 git（多半是用了新素材忘了 whitelist），
+          # 則本機能跑、上 gh-pages 會破圖 → 在此擋下，見 tools/asset-audit/README.md
+          python3 tools/asset-audit/audit.py check
+
       - name: 決定部署子路徑
         if: steps.guard.outputs.ready == 'true'
         id: route

@@ -3,5 +3,7 @@ null,
 {"id":1,"expanded":true,"name":"M01 韓家小院","order":2,"parentId":2,"scrollX":653.6666666666666,"scrollY":407.3333333333333},
 {"id":2,"expanded":true,"name":"序章·青牛鎮","order":1,"parentId":0,"scrollX":0,"scrollY":0},
 {"id":3,"expanded":true,"name":"M02 村道","order":3,"parentId":2,"scrollX":832,"scrollY":624},
-{"id":4,"expanded":true,"name":"M03 田埂小徑","order":4,"parentId":2,"scrollX":832,"scrollY":624}
+{"id":4,"expanded":true,"name":"M03 田埂小徑","order":4,"parentId":2,"scrollX":832,"scrollY":624},
+{"id":5,"expanded":true,"name":"第一章·七玄門","order":5,"parentId":0,"scrollX":0,"scrollY":0},
+{"id":6,"expanded":true,"name":"M04","order":6,"parentId":5,"scrollX":653.6666666666666,"scrollY":407.3333333333333}
 ]
