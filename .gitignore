@@ -65,7 +65,7 @@ game/effects/**
 game/fonts/**
 game/movies/**
 
-# --- whitelist：316 個實際引用中的素材 ---
+# --- whitelist：323 個實際引用中的素材 ---
 !game/audio/bgm/Battle1.ogg
 !game/audio/bgm/Battle3.ogg
 !game/audio/bgm/Castle1.ogg
@@ -374,6 +374,13 @@ game/movies/**
 !game/img/tilesets/SF_Outside_A5.png
 !game/img/tilesets/SF_Outside_B.png
 !game/img/tilesets/SF_Outside_C.png
+!game/img/tilesets/W_Outside_A1.png
+!game/img/tilesets/W_Outside_A2.png
+!game/img/tilesets/W_Outside_A3.png
+!game/img/tilesets/W_Outside_A4.png
+!game/img/tilesets/W_Outside_A5.png
+!game/img/tilesets/W_Outside_B.png
+!game/img/tilesets/W_Outside_C.png
 !game/img/tilesets/World_A1.png
 !game/img/tilesets/World_A2.png
 !game/img/tilesets/World_B.png
