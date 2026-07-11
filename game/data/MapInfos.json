@@ -6,7 +6,7 @@ null,
 {"id":4,"expanded":true,"name":"M03 田埂小徑","order":4,"parentId":2,"scrollX":832,"scrollY":624},
 {"id":5,"expanded":true,"name":"第一章·七玄門","order":5,"parentId":0,"scrollX":822.5454545454545,"scrollY":479.27272727272725},
 {"id":6,"expanded":true,"name":"M04 七玄門·山門廣場","order":6,"parentId":5,"scrollX":1131,"scrollY":659},
-{"id":7,"expanded":false,"name":"castle town","order":8,"parentId":9,"scrollX":1139,"scrollY":1261},
+{"id":7,"expanded":false,"name":"castle town","order":8,"parentId":9,"scrollX":1131,"scrollY":659},
 {"id":8,"expanded":false,"name":"Shrine","order":9,"parentId":9,"scrollX":1131,"scrollY":659},
 {"id":9,"expanded":true,"name":"References","order":7,"parentId":0,"scrollX":822.5454545454545,"scrollY":479.27272727272725}
 ]
