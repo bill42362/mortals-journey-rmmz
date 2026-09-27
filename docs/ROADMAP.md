@@ -45,7 +45,7 @@
 - [x] 功法習得（**原生機制**，非 SkillLearnSystem）——長春功=墨大夫事件師授、火球術=遺物書簡「習得技能」效果（書簡不消耗）；SkillLearnSystem 已移除；第二幕靈石成本改走藏經閣**買玉簡**
 - [x] 第一幕資料層（道具 32–41、功法 236–237、配方/習得成本 notetag，見 [PLUGINS §2/§2.3](../docs/PLUGINS.md)）
 - [ ] 回合戰鬥基礎配置（逃跑率/先制/被偷襲）——伏擊判定已由 `MJ_LootAndPK` 提供；逃跑率/troops 待內容期
-- [x] i18n 骨架（MessageCore Localization 已開啟、`game/data/Languages.tsv` 已建含序章 31 key、預設語言繁中；見 [TECH §1.3](../docs/TECH.md)）
+- [x] i18n 骨架（MessageCore Localization 已開啟、預設語言繁中；見 [TECH §1.3](../docs/TECH.md)）。`game/data/Languages.tsv` 現有 **167 個 key**（45 `op_` 序章 ＋ 123 `a1_` 第一幕，2026-09-27 補齊第一幕全部 114 個 key）；English 欄待譯
 - [x] 解析度設 1280×720（`data/System.json` `advanced` + `package.json window`；非 CoreEngine 參數）
 - [x] UI 仙俠詞彙中文化（System.json terms：氣血/靈力/層/修為/銅板…，見 [TECH §10](../docs/TECH.md)）
 - [ ] VisuStella 外掛參數字串中文化（OptionsCore/煉丹/習得等，漸進）
